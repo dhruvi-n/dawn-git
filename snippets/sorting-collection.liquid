@@ -1,0 +1,111 @@
+<div class="filter_right_content">        
+    <div class="form_groupss form-sorting-collection"> 
+      <h3 class="filter_title-sort sorting-title">
+        <span class="title_inr gt_reg">
+          Sort:
+          <label class="label-sorting"></label> <i class="fa fa-angle-down" aria-hidden="true"></i>
+
+        </span>
+      </h3>
+      <div class="custom-select sorting-sort-coll">
+        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+        <ul class="sort_filter gt_reg">
+          {% for option in collection.sort_options %}
+          <li value="{{ option.value | escape }}"{% if option.value == sort_by %} class="activefilter"{% endif %}><a href="?sort_by={{ option.value | escape }}">{{ option.name | escape }}</a></li>
+          {%- endfor -%}
+        </ul>              
+      </div>
+    </div>
+  </div>
+
+  <style>
+.filter_right_content {
+    display: flex;
+    justify-content: flex-end;
+}
+label.label-sorting {
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 600;
+}
+    .custom-select.sorting-sort-coll {
+    position: absolute;
+    z-index: 9;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0px -1px 10px 0px rgb(0 0 0 / 38%);
+      display: none;
+}
+    .form-sorting-collection {
+    position: relative;
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+    .sort_filter{
+      list-style: none !important;
+    }
+    h3.filter_title-sort.sorting-title {
+    
+      margin: 0;
+    text-transform: uppercase;
+    letter-spacing: .3em;
+    font-size: .8em;
+    display: block;
+    width: 100%;
+    padding-top: 15px;
+    cursor: pointer;
+    
+    align-items: center;
+    padding-bottom: 12px;
+}
+    span.title_inr.gt_reg {
+    display: flex;
+    justify-content: space-between;
+}
+    h3.filter_title-sort.sorting-title i{
+      font-size: 17px;
+    }
+    .form_groupss.form-sorting-collection{
+    padding-top: 0px;
+    border-bottom: 1px solid;
+    border-bottom-color: #e8e8e1;
+    }
+  </style>
+
+  <script>
+$( document ).ready(function() {
+ var sort =   $('.sort_filter').find('.activefilter a').html();
+  $('.label-sorting').html(sort);
+});
+
+    $(document).on("click",".filter_title-sort",function() {
+
+  $(this).closest('.form_groupss').find('.filter_title-sort  i').toggleClass('fa-angle-up');
+       $(this).closest('.form_groupss').find('.filter_title-sort  i').toggleClass('fa-angle-down');
+   $(this).closest('.form_groupss').find('.custom-select').slideToggle(200);
+  
+    });
+    
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

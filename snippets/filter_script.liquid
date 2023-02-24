@@ -1,0 +1,149 @@
+<script type="text/javascript">  
+  var loadfilter = {
+    tagurl: function(){
+      var selectedoptions = [],
+          currenttags = '',query = '',shopurl,collectionurl,finalurl;
+      shopurl = '{{ shop.url }}';        
+      collectionurl = '{{collection.url}}';
+      $('.filter_group li.activefilter').each(function(){
+        selectedoptions.push($(this).data('value'));
+      });
+      $.each( selectedoptions, function( key, value ) {
+        if(key != selectedoptions.length - 1){
+          currenttags += selectedoptions[key] + '+';
+        }else{
+          currenttags += selectedoptions[key];
+        }
+      });
+      query = $('.sort_filter li.activefilter a').attr('href');
+      finalurl = shopurl+collectionurl+'/'+currenttags+query;
+      loadfilter.process(finalurl);
+    },
+    updateview: function(filterURL){
+      $.ajax({
+        type: 'GET',
+        url: filterURL,
+        dataType: "html",
+        beforeSend: function() {
+          //$(".coll_right").addClass('filter-loading');   
+        },
+        success: function(data){
+          //console.log(data);
+          //console.log(filterURL);
+          //$(".coll_right").removeClass('filter-loading');
+          var sidebar = $(data).find('.filter_by_content').html();
+          $('.filter_by_content').empty();
+          $('.filter_by_content').html(sidebar);
+          var collpro = $(data).find('#ProductGridContainer').html();
+          $('#ProductGridContainer').empty();
+          $('#ProductGridContainer').html(collpro); 
+          
+          var activemenu = $('.activemenu').data('menu');
+          $('.filter_group li').each(function(e){
+            let datalist = $(this).data('value');
+            if(activemenu==datalist){
+              $(this).closest('.form_groupss').addClass('hide_groups');
+            }    
+          });
+          
+          window.history && window.history.pushState && window.history.pushState("", "", filterURL);
+          $('.filter_group').each(function(e){
+            var grouplength = $(this).children().length;
+            if(grouplength > 0){
+              $(this).closest('.form_groupss').show();
+            }else{
+              $(this).closest('.form_groupss').hide();
+            }
+          });  
+          
+          $('.form_groupss').click(function(){
+
+            if ($(this).hasClass("active-fill")) {
+              $(this).removeClass("active-fill");
+              $(this).find(".custom-select").slideUp(500);
+
+            }
+            else{
+
+              $(".form_groupss").removeClass("active-fill");
+              $(this).addClass("active-fill");
+              $(".custom-select").slideUp(200);
+              $(this).find(".custom-select").slideDown(500);
+            }
+          });
+        },
+        error: function(error) {
+          console.log(error);       
+          location.replace(filterURL);
+        },
+      });
+    },
+    process: function(purl){
+      var urlstring = '';
+      urlstring = purl;
+      //console.log(urlstring);
+      loadfilter.updateview(purl);
+    }
+  }
+  var sidefilter = {
+    activeselected: function(selectedval){
+      selectedval.toggleClass('activefilter').siblings().removeClass('activefilter');
+    }
+  }
+  $(document).on('click','.filter_title',function(e){
+//   	$(this).next('.custom-select').slideToggle();
+  });
+  $('body').on('click' ,'[data-option-filter]' ,function(e){
+    e.preventDefault();
+    var selectedtag = $(this).parent('li');
+    sidefilter.activeselected(selectedtag);
+    loadfilter.tagurl();
+    //$('html, body').animate({scrollTop:$('.filters-toolbar-wrapper').position().top}, 'slow');
+  });  
+  $(document).ready(function(e){
+    $('.filter_group').each(function(e){
+      var grouplength = $(this).children().length;
+      if(grouplength > 0){
+        $(this).closest('.form_groupss').show();
+      }else{
+        $(this).closest('.form_groupss').hide();
+      }
+    });
+  });
+  
+  
+    
+//   === 3/23 custom js
+  
+  $(document).ready(function(){
+    $('.form_groupss').click(function(){      
+      if ($(this).hasClass("active-fill")) {
+     	$(this).removeClass("active-fill");
+    	$(this).find(".custom-select").slideUp(500);       	
+    }
+    else{      
+         $(".form_groupss").removeClass("active-fill");
+      $(this).addClass("active-fill");
+      $(".custom-select").slideUp(200);
+      $(this).find(".custom-select").slideDown(500);
+      }
+    });
+  });
+  var activemenu = $('.activemenu').data('menu');
+  var activemaintitle = $('.activemenu').data('title');
+  var lasturl = window.location.pathname.split("/").pop();
+  console.log('dd',activemaintitle,lasturl);
+  if(activemaintitle=='shape' || activemaintitle=='style' || activemaintitle==undefined){
+    if(lasturl=='wedding-bands'){
+    }else{
+  	$('.filter_left_content').html('&nbsp;');
+    }
+  }
+  $('.filter_group li').each(function(e){    
+  	let datalist = $(this).data('value');
+    if(activemenu==datalist){
+    	$(this).closest('.form_groupss').addClass('hide_groups');
+    }    
+  });
+</script>
+

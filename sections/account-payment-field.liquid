@@ -1,0 +1,107 @@
+<div class="page-width page-width--narrow">
+<div class="payment-whole-content">
+  <div class="head-content-text1">
+    <p class="field-sub-text">{{ section.settings.subtitle1 }}</p>
+  </div>
+  <div class="head-content-text2">
+    <p class="field-sub-text">{{ section.settings.subtitle2 }} <span>{{ section.settings.total_balance }}</span>.</p>
+    <p class="field-sub-text">{{ section.settings.subtitle3 }} <span>{{ section.settings.overdue_balance }}</span>.</p>
+  </div>
+</div>
+  <div class="paymnet-form-design">
+    <form class="payment-form-cus">
+      <div class="card-number-div">
+      <label for="card_number">CARD NUMBER</label>
+      <input type="text" id="card_number" name="card-number">
+      </div>
+      <div class="card-exp-div">
+      {% for block in section.blocks %} 
+      <div class="whole-month-year">
+        <label for="exp_month">{{ block.settings.title }}</label>
+        {% assign address = block.settings.address | split: '| ' %}
+         <select id="expiry{{ forloop.index }}" class="select-year" name="expiry">
+           {% for address in address %} 
+           		<option value="{{address}}">{{ address}}</option>
+           {% endfor %}
+       		 
+           </select>
+        </div>
+        {% endfor %}
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+<style>
+  .head-content-text2 span{
+  color: #f370bb;
+  }
+  .payment-form-cus label {
+    display: block;
+}
+</style>
+
+{% schema %}
+{
+   "name":"account payment field",
+   "settings":[
+{
+               "type":"textarea",
+               "id":"subtitle1",
+               "label":"subtitle 1"
+            },
+{
+               "type":"text",
+               "id":"subtitle2",
+               "label":"subtitle 2"
+            },
+{
+               "type":"text",
+               "id":"subtitle3",
+               "label":"subtitle 3"
+            },
+{
+               "type":"text",
+               "id":"total_balance",
+               "label":"total balance money"
+            },
+{
+               "type":"text",
+               "id":"overdue_balance",
+               "label":"overdue balance money"
+            }
+   ],
+   "blocks":[
+      {
+         "type":"image",
+         "name":"block",
+         "settings":[
+{
+               "type":"textarea",
+               "id":"title",
+               "label":"expiry title"
+            },            
+{
+               "type":"textarea",
+               "id":"address",
+               "label":"expiry option"
+            }
+            
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":{
+
+            "en":"account payment field"
+         },
+         "category":{
+
+            "en":"account payment field"
+         }
+      }
+   ]
+}
+{% endschema %}

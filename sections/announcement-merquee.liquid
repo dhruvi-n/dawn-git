@@ -1,0 +1,87 @@
+
+<div class="marquee">
+  <div>
+    {% for block in section.blocks %}
+    <span><a class="meruee-color" href="{{ block.settings.link }}">{{  block.settings.title }}</a></span>
+    {% endfor %}
+  </div>
+</div>
+
+            
+<style>
+.marquee {
+    
+    color: #fff;
+    
+    height: 40px;
+    overflow: hidden;
+    background-color: #000;
+    position: relative;
+  display: flex;
+    align-items: center;
+}
+
+.marquee div {
+    display: flex;
+    width: 200%;
+    position: absolute; 
+    overflow: hidden;
+    animation: marquee 12s linear infinite;
+  justify-content: space-evenly;
+}
+
+
+  a.meruee-color {
+    color: #fff;
+    font-family: "Work Sans", sans-serif;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+@keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+}
+</style>        
+
+
+{% schema %}
+{
+   "name":"announement merquee",
+   "settings":[
+
+   ],
+   "blocks":[
+      {
+         "type":"image",
+         "name":"block",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Title"
+            },
+            {
+               "type":"url",
+               "id":"link",
+               "label":"link"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":{
+
+
+            "en":"announement merquee"
+         },
+         "category":{
+
+
+            "en":"announement merquee"
+         }
+      }
+   ]
+}
+{% endschema %}

@@ -1,0 +1,224 @@
+<div class="page-width">
+  {% if section.settings.title != blank %}
+  <div class="section-title border-line">
+    <h3><span class="text-uppercase">{{section.settings.title}}</span></h3>
+  </div>
+  {% endif %}
+  <div class="main-slide">
+    <ul class="slidercollection">
+    {% for block in section.blocks %} 
+    {% assign collection = collections[block.settings.collection] %}
+    <li>
+      <a href="{{ collection.url }}">
+        {% if block.settings.img != blank %}
+        <span class="img_cover">
+          <img src="{{ block.settings.img | img_url :"90x" }}">
+        </span>
+        {% endif %}
+        <p>{{ collection.title }}</p>
+      </a>
+    </li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<style>
+.main-slide li {
+    -webkit-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+    overflow: hidden;
+    position: relative;
+    max-width: 110px;
+    list-style: none;
+}
+  .main-slide li a {
+    display: block;
+    text-align: center;
+    border: 0;
+    outline: none;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+}
+  .main-slide li a .img_cover {
+    display: block;
+    position: relative;
+    border-radius: 50%;
+    margin: 0 auto 5px;
+    overflow: hidden;
+    border: 1px solid #000; 
+    width: 90px;
+    height: 90px;
+}
+  .main-slide li a .img_cover img{
+    width: 100%;
+    -webkit-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+    width: 90px;
+    height: 90px;
+    display: block;
+  }
+   .main-slide li a span{
+     transition: box-shadow .3s;
+}
+   .main-slide li:hover a span{
+    border-radius: 50%;
+    box-shadow: 0px 5px 3px #5c4f4bad; 
+}
+  
+  .main-slide li a p{
+     color:#000;
+}
+  .main-slide li:hover a img {
+    transform: scale(1.15);
+}
+
+  .slidercollection .slick-prev:before {
+    content: '';
+}
+  .slidercollection .slick-next:before{
+  	content: '';
+  }
+  .slidercollection  i.fa{
+    font-size: 25px;
+    color: #000;
+    opacity: .7;
+}
+  .section-title, .border-line {
+    position: relative;
+    text-align: center;
+    
+}
+.section-title h3 span:hover {
+    background: #ef3f64;
+    color: white;
+    border-color: #ef3f64;
+}
+  .border-line::before {
+    background: #e9e9e9 none repeat scroll 0 0;
+    content: "";
+    height: 1px;
+    left: 0;
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    z-index: -1;
+}
+  .section-title::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+  .section-title h3 {
+    background: #fff none repeat scroll 0 0;
+    display: inline-block;
+    padding: 0 15px;
+}
+  .section-title h3 span {
+    border: 1px solid #3b3a3a;
+    border-radius: 33px;
+    display: block;
+    color: black;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    padding: 10px 28px;
+}
+ 
+  	.slidercollection .slick-prev {
+    left: 0;
+}
+   .slidercollection  .slick-next {
+    right: 0;
+}
+    .slick-prev, .slick-next{
+    	top: 30%;
+    }
+ 
+</style>
+
+  <script>
+    $(document).ready(function () {
+      $('.slidercollection').slick({
+        dots: false,
+        infinite: true,
+        speed: 300,
+        arrows: true,
+        slidesToShow: 7,
+        slidesToScroll: 1,
+		prevArrow:"<button type='button' class='slick-prev pull-left common'><i class='fa fa-angle-left'></i></button>",
+        nextArrow:"<button type='button' class='slick-next pull-right common'><i class='fa fa-angle-right'></i></button>",
+             responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 5
+          }
+        },
+        {
+          breakpoint: 991,
+          settings: {
+            slidesToShow: 4
+          }
+        },
+        {
+          breakpoint: 568,
+          settings: {
+            slidesToShow: 3
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 2
+          }
+        }
+      ]
+      });
+    });
+  </script>
+{% schema %}
+{
+   "name":"categories collections",
+   "class":"collection-color",
+   "settings":[
+			{
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            }
+   ],
+   "blocks":[
+      {
+         "type":"image",
+         "name":"block",
+         "settings":[
+            {
+              "type": "collection",
+              "id": "collection",
+              "label": "Select Color Collections"
+            },
+			{
+              "type": "image_picker",
+              "id": "img",
+              "label": "Select Collections Image"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":{
+
+            "en":"categories collections"
+         },
+         "category":{
+
+            "en":"categories collections"
+         }
+      }
+   ]
+}
+{% endschema %}
+
+

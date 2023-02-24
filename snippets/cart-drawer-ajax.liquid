@@ -1,0 +1,487 @@
+<div class="component__cart">
+  <div class="component__inline-cart-overlay js-component__inline-cart-close" data-dd-action-name="Inline Cart - Click Off Cart"></div>
+  <div class="component__insertion">
+    <button class="component__close">
+      Continue shopping
+    </button>
+    <div class="component__top-bar">
+      <p class="component__text">Your bag ( <span>{{cart.item_count }}</span>)</p>
+    </div>
+    <div class="component__wrapper">
+        <div class="hc-append"></div>
+      <div class="component__contents" >
+        <form action="/cart" method="post" novalidate class="cart">
+        {% for item in cart.items %}
+        <div class="component__item item-details" data-id="{{ item.id }}">
+       
+          <a class="component__image-wrapper" data-variant="{{ item.variant.id }}" href="{{ item.url}}">
+            <img  class="component__image"  src="{{ item | img_url: 'x100' }}" />
+          </a>
+          <div class="component__info">
+            <a class="component__product-title" href="{{ item.url}}" >
+              {{ item.title }}
+            </a>
+            <div class="component__details">
+              <div class="component__first ">
+                <quantity-input class="quantity">
+                  <button class="quantity__button plus-quantity" name="minus" type="button">&minus;</button>
+                  <input class="quantity__input quantity-input" data-pro="{{ item.id }}" type="number" value="{{item.quantity}}" min="0">
+                  <button class="quantity__button minus-quantity" name="plus" type="button">&plus;</button>
+                </quantity-input>
+              </div>
+              <div class="component__second">
+                <span class="component__price"  data-var-id="{{  item.variant.id}}"  style="">{{item.line_price | money }}</span>
+                <button class="component__remove" data-id="{{  item.variant.id}}">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        </form>
+        
+      </div>
+      <div class="component__info">
+        <div class="component__subtotal-wrapper"><span class="component_subtotal-text">Subtotal:</span>
+          <span class="component__ubtotal-price">
+            {{ cart.total_price | money }}
+          </span>
+        </div>
+        <div class="component__inline-cart-account">
+          <div class="component__inline-cart-forms-wrapper">
+            <a class="component__checkout" href="/checkout">Checkout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+$(document).on('click', '.cart-drawer-open',  function(e){ 
+   e.preventDefault();
+     $('.component__cart').addClass('is-active');
+ });
+  
+  $(document).on('click', '#addcartcustom_btn',  function(e){ 
+     e.preventDefault();
+     var url = window.location.href;  
+    var click = $(this);
+    
+    $('.component__cart').addClass('is-active');
+
+     var customid  = ShopifyAnalytics.meta.product.variants[0].id;
+     var qty =  $('input.inputqty').val();
+    console.log(qty);
+    
+     $.ajax({
+      type: 'POST',
+      url: '/cart/add.js',
+      data: {
+        quantity: qty,
+        id: customid
+      },
+      dataType: 'json', 
+      success: function (cart) { 
+       
+            
+        fetch( url,{ credentials: 'same-origin', method: 'GET' })
+        .then(function (response) {
+          response.text().then(function (content) {
+            var new_data =  $(content).find('.component__insertion').html();
+            $('.component__insertion').html(new_data);
+            var new_tag =  $(content).find('.cart-count-bubble').html();
+             $('.cart-count-bubble').html(new_tag);
+          });
+      });
+      },
+      error: function(){
+      }
+    });
+    
+    
+    
+     $(document).on('change', '.quantity__input', function() {
+      var $update = {};
+       
+    var newwww =   $update[$(this).closest('.item-details').data('id')] = parseInt($(this).val());
+       $(this).attr("value",newwww);
+    
+      $.ajax({
+        method: 'POST',
+        datatype: 'json',
+        data: { 
+          updates: $update,
+          quantity: qty,
+          id: customid
+        },
+        url: '/cart/update.js',
+        success: function(cart){
+          
+          $.getJSON('/cart.js', function(cart) {
+			 var count =  cart.item_count;
+            $(cart.items).each(function(index, item) {
+
+              var subprice =  cart.total_price/ 100;
+                var upprice123 =  item.line_price ;
+//               var idddd = $(".component__item").data("varId");
+//               console.log(idddd, upprice123,subprice);
+              var r1 = $('[data-var-id="'+item.variant_id+'"]');
+//             
+               var a =  Number(item.line_price / 100);
+              $('[data-var-id="'+item.variant_id+'"]').html('{{ 0 | money}}'.replace("0",a));
+              $('.component__ubtotal-price').html('{{ 0 | money}}'.replace("0",subprice));
+                $(".component__text span").html(count);
+               $(".cart-count-bubble span").html(count);
+            });
+
+          });
+          
+        },
+        error: function(){
+        }
+      });
+    });
+ 
+    
+  });
+    
+$(document).on("click",".component__cart",function(e) {
+      var obj = $(".component__insertion");
+      if (!obj.is(event.target) && !obj.has(event.target).length) {
+        $('.component__cart').removeClass('is-active');
+      }
+      else {
+      }
+    });
+   
+
+      $(document).on("click",".component__close",function(e) {
+     
+      $( ".component__cart" ).removeClass("is-active");
+    });
+  
+    
+    $(document).on('click','.component__remove',function(e){
+        e.preventDefault();
+        var itemid = $(this).data('id');
+      var thiis = $(this)
+        $.ajax({
+          type: "POST",
+          url: '/cart/change.js',
+          data:{quantity:0,id: itemid},
+          dataType: "json",
+          success: function (cart){
+//            console.log(cart);
+             var subprice1 =  cart.total_price/ 100;
+            var count =  cart.item_count;
+//               console.log("umi 2",itemid);
+           thiis.parent().parent().parent().parent().remove();   
+             $('.component__ubtotal-price').html('{{ 0 | money}}'.replace("0",subprice1));
+                                                 
+               $(".component__text span").html(count);
+              $(".cart-count-bubble span").html(count);
+           
+          },
+          error:function(error){
+            console.log('remove-error',error);
+          }
+        });
+      });
+    
+</script>
+
+
+<style>
+
+.component__cart {
+    background-color: rgba(0,0,0,0.35);
+    display: flex;
+    height: 100%;
+    justify-content: flex-end;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    transition-duration: 0.2s;
+    transition-property: opacity;
+    transition-timing-function: ease-out;
+    width: 100%;
+    z-index: 2147483001;
+}
+  .component__cart.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+  .component__inline-cart-overlay {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+  .component__insertion {
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+    height: 100%;
+    max-width: 420px;
+    overflow: hidden;
+    position: relative;
+    transform: translateX(50%);
+    transition-duration: 0.35s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+    width: 100%;
+}
+ .is-active .component__insertion{
+      transform: translateX(0);
+  } 
+  button.component__close {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    padding: 5px;
+    position: fixed;
+    right: 12px;
+    top: 7px !important;
+    color: #fff;
+    transform: translateZ(2px);
+    z-index: 3;
+    text-transform: uppercase;
+    font-family: Lato,sans-serif;
+    letter-spacing: 0.8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: underline;
+    line-height: 17px;
+}
+  .component__top-bar {
+    background-color: #fff;
+    box-shadow: 0 0 0 rgb(0 0 0 / 10%);
+    position: fixed;
+    top: 0 !important;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+    width: 100%;
+    z-index: 2;
+}
+  p.component__text {
+    color: #fff;
+    background-color: #00aa9e;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    line-height: 15px;
+    margin: 0;
+    padding-bottom: 13px;
+    padding-left: 12px;
+    padding-top: 13px;
+    text-transform: uppercase;
+}
+  .component__wrapper {
+    height: 100%;
+    overflow: scroll;
+    padding-top: 41px;
+    position: relative;
+    width: 100%;
+}
+  .component__promo-bar {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #eaecf1;
+    border-top: 1px solid #eaecf1;
+    position: relative;
+    z-index: 1;
+}
+  p.component__bar-text {
+    color: #00aa9e;
+    font-family: Lato,sans-serif;
+    font-size: 11px;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.66px;
+    line-height: 16px;
+    margin: 0;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    text-align: center;
+}
+/*   .component__contents {
+    overflow: scroll;
+} */
+  .component__item {
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    display: flex;
+    padding: 19px 5px 16px;
+}
+  a.component__image-wrapper {
+    margin-right: 17px;
+    position: relative;
+}
+  img.component__image{
+  	 max-width: 81px;
+  }
+  a.component__product-title {
+    color: #4b4b4b;
+    display: inline-block;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 20px;
+    max-width: 204px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition-duration: 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+}
+  .component__details {
+/     width: 230px; /
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 15px;
+}
+  span.component__price {
+    color: #4b4b4b;
+    display: block;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    line-height: 15px;
+    margin-bottom: 6px;
+    margin-left: auto;
+    text-align: right;
+}
+  button.component__remove {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    color: #00aa9e;
+    display: block;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    line-height: 19px;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 0;
+    text-align: right;
+    text-decoration: underline;
+}
+  .component__-undo {
+    background-color: #f5fcfb;
+    display: none;
+    margin: 10px auto;
+    padding: 26px 48px 10px;
+    text-align: center;
+    width: 85%;
+}
+  p.component__undo-text {
+    color: #4b4b4b;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    line-height: 19px;
+    margin: 0;
+}
+  .component__info {
+    background-color: #fff;
+    bottom: 0;
+    left: 0;
+/     position: absolute; /
+    width: 100%;
+}
+  .component__subtotal-wrapper {
+    align-items: center;
+    background-color: #fff;
+    border-top: 1px solid #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 39px 18px 32px;
+}
+  span.component_subtotal-text {
+    color: #4b4b4b;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    line-height: 19px;
+    font-weight: 700;
+}
+  span.component__ubtotal-price {
+    color: #4b4b4b;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    line-height: 19px;
+}
+  .component__inline-cart-forms-wrapper {
+/     display: none; /
+    padding: 20px 25px;
+}
+  .component__inline-cart-forms-wrapper.is-active {
+    display: block;
+}
+  a.component__checkout {
+    align-items: center;
+    border: 2px solid #feae35;
+    display: flex;
+    font-family: Lato,sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    height: 50px;
+    justify-content: center;
+    letter-spacing: 1.5px;
+    line-height: 14px;
+    text-transform: uppercase;
+    transition-duration: 0.2s;
+    width: 100%;
+    background-color: #feae35;
+    color: #fff;
+}
+  
+  .addcartclick {border-style: solid;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    padding-left: 35px;
+    padding-bottom: 10px;
+    padding-right: 35px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    border-color: rgba(254, 174, 53, 1);
+    border-radius: 2px;
+    background-color: rgba(254, 174, 53, 1);
+    text-align: center;
+    cursor: pointer;
+    background-image: none;
+    hover-type: color;
+  color: #ffffff;
+    font-size: 14px;
+    display: inline-block;}
+
+  .addcartclick{cursor: pointer !important;}
+.color{
+    color: #00aa9e;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.component__list ul li{
+ font-size:14px;
+}
+
+</style>
+
+ 

@@ -1,0 +1,70 @@
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "color_scheme": "background-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "blocks": {
+        "8b24b476-0627-4e62-a778-73c6c8914fc1": {
+          "type": "tag-filter",
+          "settings": {
+            "title": "color",
+            "filter_tags": "color-silver,color-white,color-yellow,color-parrot,color-wine,color-orange,color-purple,color-grey,color-red,color-peach,color-skyblue,color-cream,color-mustard,color-brown,color-black,color-pink,color-rama,color-coffee,color-pista,color-navyblue,color-blue,color-green"
+          }
+        },
+        "c69f96fd-4491-42c7-9ebd-108411bb98f5": {
+          "type": "tag-filter",
+          "settings": {
+            "title": "fabric",
+            "filter_tags": "Fabric-chanderi,Fabric-georgette,Fabric-linen,Fabric-cotton,Fabric-organza,Fabric-silk"
+          }
+        },
+        "bc1fa28e-2e88-4e20-9daa-801edf66438d": {
+          "type": "tag-filter",
+          "settings": {
+            "title": "style",
+            "filter_tags": "Style-Kalamkari"
+          }
+        },
+        "0886eca5-0c93-46d3-b231-4df692b8196a": {
+          "type": "tag-filter",
+          "settings": {
+            "title": "work",
+            "filter_tags": "Work-Printed"
+          }
+        }
+      },
+      "block_order": [
+        "8b24b476-0627-4e62-a778-73c6c8914fc1",
+        "c69f96fd-4491-42c7-9ebd-108411bb98f5",
+        "bc1fa28e-2e88-4e20-9daa-801edf66438d",
+        "0886eca5-0c93-46d3-b231-4df692b8196a"
+      ],
+      "settings": {
+        "products_per_page": 8,
+        "columns_desktop": 4,
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": false,
+        "filter_type": "drawer",
+        "enable_sorting": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid"
+  ]
+}

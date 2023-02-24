@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "1653992061a9f53b82": {
+      "type": "account-payment-field",
+      "blocks": {
+        "4742c4b9-be0b-4a87-9e6a-d8175c8b6456": {
+          "type": "image",
+          "settings": {
+            "title": "EXPIRY MONTH",
+            "address": "01| 02| 03| 04| 05| 06| 07| 08| 09| 10| 11| 12"
+          }
+        },
+        "1655efb9-a35f-4026-8e9a-fdb11c69ba74": {
+          "type": "image",
+          "settings": {
+            "title": "EXPIRY YEAR",
+            "address": "2019| 2018| 2017| 2016| 2015| 2014| 2013| 2012| 2011"
+          }
+        }
+      },
+      "block_order": [
+        "4742c4b9-be0b-4a87-9e6a-d8175c8b6456",
+        "1655efb9-a35f-4026-8e9a-fdb11c69ba74"
+      ],
+      "settings": {
+        "subtitle1": "Please note that a 2% surcharge applies to credit card payments. Please enter the total amount you wish to pay, including surcharge, on the form below",
+        "subtitle2": "Your total account balance including surcharge is currently",
+        "subtitle3": "Your overdue balance including surcharge is currently",
+        "total_balance": "$0.00",
+        "overdue_balance": "$0.00"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1653992061a9f53b82"
+  ]
+}

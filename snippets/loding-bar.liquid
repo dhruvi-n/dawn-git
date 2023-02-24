@@ -1,0 +1,45 @@
+<!-- 
+
+<div class="progress" id="PreLoaderBar">
+	<div class="animated-gradient indeterminate" style="height:3px;width:150px;margin:200px;"></div>
+</div>
+
+
+<style>
+body {
+  background: white;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.animated-gradient {
+  background: -webkit-gradient(linear, left top, right top, from(#DDDDDD), color-stop(#FFFFFF), color-stop(#DDDDDD), color-stop(#FFFFFF), to(#DDDDDD));
+  background: linear-gradient(to right, #F4A2CE,#E95502, #F4A2CE,#E95502, #F4A2CE);
+  background-size: 200% 100%;
+  width: 100%;
+  background-position: 0 100%;
+  animation: gradient 2s infinite;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  height: 5px !important;
+    width: 100% !important;
+    margin: 0px !important;
+}
+
+@keyframes gradient { 
+  0%   { background-position: 0 0; }
+  100% { background-position: -200% 0; }
+}
+
+  
+</style>
+
+<script>
+document.onreadystatechange = function () {
+            if (document.readyState === "complete") {
+                console.log(document.readyState);
+                document.getElementById("PreLoaderBar").style.display = "none";
+            }
+        }
+</script> -->

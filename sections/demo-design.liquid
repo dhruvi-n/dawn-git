@@ -1,0 +1,116 @@
+    <div class="div-body">
+      <div class="content">
+        
+        <h1 class='arrow arrow-set'>Pure CSS</h1>
+      </div>
+    </div>
+    <style>
+      
+ .div-body {
+  width: 30%;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  z-index: 100;
+} 
+
+
+.arrow-set{
+  font-size: 25px;
+  line-height: 50px;
+  margin: 20px auto;
+  z-index: auto;
+  cursor: default; 
+}
+.arrow-set:before, 
+.arrow-set:after {
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-width: 0;
+}
+
+
+
+.arrow {
+  background-color: #EF71D5;
+}
+.arrow:after, 
+.arrow:before {
+  border-width: 25px 0 25px 25px;
+}
+.arrow:before {
+  border-color: #EF71D5 transparent;
+  left: -24px;
+}
+.arrow:after {
+  border-color: transparent #EF71D5;
+  right: -24px;
+}
+
+    </style>
+
+
+
+{% schema %}
+{
+"name":"demo design",
+  "class": "whole-spacing",
+"settings":[
+{
+"type" : "text",
+"id" : "title",
+"label" : "title"
+},
+  {
+"type" : "image_picker",
+"id" : "bg_img",
+"label" : "background image"
+},
+  {
+"type" : "url",
+"id" : "coll_url",
+"label" : "collection url"
+}
+],
+"blocks":[
+{
+"type":"image",
+"name":"block",
+"settings":[
+{
+"type" : "product",
+"id" : "product",
+"label" : "Select Product"
+},
+  {
+"type" : "text",
+"id" : "btn",
+"label" : "buy now button"
+},
+  {
+"type" : "image_picker",
+"id" : "bg_img",
+"label" : "background image"
+}
+]
+}
+],
+"presets":[
+{
+"name":{
+
+"en":"demo design"
+},
+"category":{
+
+"en":"demo design"
+}
+}
+]
+}
+{% endschema %}

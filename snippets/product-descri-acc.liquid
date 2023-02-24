@@ -1,0 +1,69 @@
+<div class="accordian">
+  {% assign description_parts = product.description | split: '<h3>' %}
+  {% for part in description_parts %}
+      {% unless part == blank %}
+      {% assign part_parts = part | split: '</h3>' %}
+      {% assign heading_handle = part_parts.first | handle %}
+        
+      <h5><a href="#{{ heading_handle }}" data-accordian-action>{{ part_parts.first }} <span>+</span></a></h5>
+      <p id="{{ heading_handle }}" data-accordian-target>{{ part_parts.last | remove: '<p>' | replace: '</p>','<br><br>' }}</p>
+    {% endunless %}
+  {% endfor %}
+</div>
+
+<script>
+  var lastClick;
+  var accordianActions = document.querySelectorAll('[data-accordian-action]');
+  var accordianTargets = document.querySelectorAll('[data-accordian-target]');
+  
+  var hideTargets = function () {
+    for (var i = 0; i < accordianTargets.length; i++) {
+      var accordianTarget = accordianTargets[i];
+      accordianTarget.style.display = 'none';
+    }
+  };
+  
+  var showTarget = function (targetSelector) {
+    var target = document.querySelector(targetSelector);
+    target.style.display = 'block';
+  };
+  
+  hideTargets();
+  
+  for (var i = 0; i < accordianActions.length; i++) {
+    var accordianAction = accordianActions[i];
+    accordianAction.addEventListener('click', function (e) {
+      e.preventDefault();
+      hideTargets();
+      if (lastClick !== e.currentTarget) {
+        showTarget(e.currentTarget.getAttribute('href'));
+        lastClick = e.currentTarget;
+      } else {
+        lastClick = null;
+      }
+    });
+  }
+  
+  
+   // $(document).on('click', '[data-accordian-action]', function (e) {
+   //     e.preventDefault();
+   //   $('[data-accordian-target]').hide();
+   //   if (lastClick !== e.currentTarget) {
+   //     $(e.currentTarget.getAttribute('href')).show();
+   //     lastClick = e.currentTarget;
+   //   } else {
+   //     lastClick = null;
+   //   }
+   // });
+ 
+</script>
+
+<style>
+  .accordian h5 {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .accordian h5 span {
+    float: right;
+  }
+</style>

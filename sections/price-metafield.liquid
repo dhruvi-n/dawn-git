@@ -1,0 +1,47 @@
+{% if customer.has_account %}
+
+   {% assign brand_name = product.vendor | append: ":"  %}
+
+   {% for customer_tag in customer.tags %}
+     {% if customer_tag contains brand_name %}
+       {% assign selected_tag = customer_tag  %}
+       {% assign pricing_tag = selected_tag | replace: brand_name, "" %}
+     {% endif %}
+  {% endfor %}
+
+   {% unless pricing_tag %}
+     {% for customer_tag in customer.tags %}
+       {% if customer_tag contains "Base:" %}
+         {% assign selected_tag = customer_tag %}
+         {% assign pricing_tag = selected_tag | replace: "Base:", "" %}
+       {% endif %}
+     {% endfor %}
+   {% endunless %}
+
+    {% assign metafield_name = "price_level_" | append: pricing_tag %}
+
+  {% assign metafield_price = product.metafields.pricing[metafield_name] %}
+   {% assign money_price = metafield_price | times: 100 | money_with_currency %}
+
+ {% else %}
+
+   {% assign selected_tag = "No user present, using standard price" %}
+   {% assign metafield_price = product.metafields.pricing.standard_price %}
+   {% assign money_price = metafield_price | times: 100 | money_with_currency %}
+
+ {% endif %}
+
+
+
+{% schema %}
+  {
+    "name": "price-metafield",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

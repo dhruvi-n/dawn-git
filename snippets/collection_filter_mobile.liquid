@@ -1,0 +1,205 @@
+<div class="mobile-filter-close">
+	{%- render 'icon-close' -%}
+</div>
+
+<div class="filter_by_con ">
+<div class="filter_by_content">
+  <div class="filter_left_content">      
+    
+    <div class="fil_optioncls gt_reg">      
+    {%- for block in section.blocks -%}
+    	{%- if block.type == 'tag-filter' -%}
+            {%- assign filter_title = 0 -%}
+            {%- assign init_filter_tag = block.settings.filter_tags | split:',' -%}	
+            {%- for tag in init_filter_tag -%}
+                {% for colltag in collection.tags %}
+                    {%- assign coll_tag = colltag | handleize -%}
+                    {%- assign fil_tag = tag | handleize -%}
+                    {%- if coll_tag == fil_tag -%}
+                        {%- assign filter_title = filter_title | plus:1 -%}					
+                    {%- endif -%}
+                {%- endfor -%}
+            {%- endfor -%}
+        {%- endif -%}
+    	{%- if filter_title > 0 -%}{%- endif -%}
+    		{% paginate collections.all.products by 999 %}
+      		{%- assign displaybands = false -%}
+      		{%- if collection.url contains 'wedding-bands' -%}
+      			{%- assign bandhandle = block.settings.title | handle -%}
+      			{%- if bandhandle contains 'band' -%}
+      				{%- assign displaybands = true -%}
+      			{%- endif -%}
+      		{%- endif -%}
+            <div class="form_groupss posi_menu gggggg_{{ forloop.index }} ">   
+              <h3 class="filter_title1">
+                <span class="title_inr gt_reg">
+                  {{block.settings.title}}
+                </span>
+                <span class="arw_filter">
+						<i class="fa fa-angle-up" aria-hidden="true"></i>
+			
+                  </span>
+              </h3>
+              <div class="custom-select">
+                {%- if block.type == 'tag-filter' -%}
+                {%- assign init_filter_tag = block.settings.filter_tags | split:',' -%}	
+                <ul class="filter_group {% if block.settings.title contains 'color'%}color_css{% endif %}">
+                  {%- for tag in init_filter_tag -%} 
+                  {%- assign tagcurrent = current_tags | lowercase | handleize -%}
+                  {%- if block.settings.display_avilable_tag -%}
+                  {% for colltag in collection.tags limit:999 %}
+                  {%- assign coll_tag = colltag | handleize | strip -%}
+                  {%- assign fil_tag = tag | handleize | strip -%} 
+                  {%- if coll_tag == fil_tag -%}       
+                  {%- if tagcurrent contains fil_tag -%}     
+                  <li class="activefilter" data-value="{{tag | handle}}">
+                    
+                    <a href="{{collection.url}}/{{ tag | handle }}" data-option-filter>{{tag}}</a>
+                  </li>
+                  {%- else -%}      
+                  <li  data-value="{{tag | handle}}">
+                    
+                    <a href="{{collection.url}}/{{ tag | handle }}" data-option-filter>{{tag}}</a>
+                  </li>
+                  {%- endif -%}
+                  {%- endif -%}              
+                  {%- endfor -%}
+                  {%- else -%}
+                  {%- assign fil_tag = tag | handle -%}  
+                  {%- assign tag_parts = tag | split: '-' -%}
+                  
+                  {%- if tagcurrent contains fil_tag -%}
+                  <li class="activefilter tooltip imgb_{{ forloop.index }}  padddin" data-value="{{tag_parts.last | handle}}"><span></span>
+                  
+                    <span class="tooltiptext  {% if block.settings.title contains 'color' %}tooltip_color{% endif %}">{{tag_parts.last}}</span>
+                    
+                    <a class="vis-reset-own" href="{{collection.url}}/{{ tag | handle }}" data-option-filter>{{- tag_parts.last -}}</a>
+                  </li>
+                  {%- else -%}
+                  <li class="tooltip imgb_{{ forloop.index }}  padddin" data-value="{{tag_parts.last | handle}}">
+                                        <span class="tooltiptext  {% if block.settings.title contains 'color' %}tooltip_color{% endif %}">{{tag_parts.last}}</span>
+
+                    <a class="vis-reset-own" href="{{collection.url}}/{{ tag | handle }}" data-option-filter>{{- tag_parts.last -}}</a>
+                  </li>
+                  {%- endif -%}
+                  
+                    {% comment %}
+                  {%- if tagcurrent contains fil_tag -%}
+                  <li class="activefilter tooltip imgb_{{ forloop.index }}  padddin" data-value="{{tag_parts.last | handle}}">{{ tag_parts.last | link_to_remove_tag: tag }}
+                     <span class="tooltiptext  {% if block.settings.title contains 'color' %}tooltip_color{% endif %}">{{tag_parts.last}}</span>
+
+                  </li>
+                  {% else %}
+                  <li class="tooltip imgb_{{ forloop.index }}  padddin" data-value="{{tag_parts.last | handle}}">{{ tag_parts.last| link_to_add_tag: tag }}
+                     <span class="tooltiptext  {% if block.settings.title contains 'color' %}tooltip_color{% endif %}">{{tag_parts.last}}</span>
+
+                  </li>
+                  {% endif %}
+                  {% endcomment %}
+                  {%- endif -%}  
+                  {%- endfor -%}
+                </ul>
+                {%- endif -%}
+              </div>
+      </div>
+    		{% endpaginate %}
+    	
+    {%- endfor -%} 
+      
+      
+      
+  </div>
+
+  </div>
+  {% comment %}
+  <div class="filter_right_content">        
+    <div class="form_groupss"> 
+      <h3 class="filter_title">
+        <span class="title_inr gt_reg">
+          Sort:
+          <span class="arw_filter">
+<!--             <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+              </path>
+            </svg> -->
+          </span>
+        </span>
+      </h3>
+      <div class="custom-select">
+        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+        <ul class="sort_filter gt_reg">
+          {% for option in collection.sort_options %}
+          <li value="{{ option.value | escape }}"{% if option.value == sort_by %} class="activefilter"{% endif %}><a href="?sort_by={{ option.value | escape }}">{{ option.name | escape }}</a></li>
+          {%- endfor -%}
+        </ul>              
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
+  </div>
+</div>
+
+<script>
+$(document).on("click",".filter_title1",function() {
+
+  $(this).closest('.form_groupss').find('.arw_filter i').toggleClass('fa-angle-down');
+   $(this).closest('.form_groupss').find('.custom-select').slideToggle(200);
+  
+    });
+ $(document).on("click",".mobile-filter",function() {
+   
+   
+  });
+  
+//   $(document).on('click','.vis-reset-own',function(a){
+//   a.preventDefault();
+//   var url_cus = $(this).attr('href');
+//     console.log(url_cus);
+  
+ 
+//   $.ajax({
+//     type: 'GET',
+//     url: url_cus,
+//     dataType: "html",
+//     success: function(data) {
+//       //       console.log(data);
+
+//       fetch(url_cus, {
+//         credentials: 'same-origin',
+//         method: 'GET'
+//       }).then(function (response) {
+        
+// //          $('.loder-filter').show();
+        
+//         response.text().then(function (content) {
+          
+          
+// //            $('.loder-filter').hide();
+         
+// //          console.log(content);
+//           var cus_html = $(content).find('.collection-cus-facet').html();
+// //                     console.log(cus_html);
+//           $('.collection-cus-facet').html(cus_html);
+
+
+//           var print_html = $(content).find('.product-main-display').html();
+//           //           console.log(print_html);
+
+//           $('.product-main-display').html(print_html);
+
+//           var url_add = response.url
+//                                console.log(url_add);
+
+//           window.history.replaceState({ path: url_add }, '', url_add); 
+
+//         });
+//       });
+//     }
+//   });
+
+
+// });
+  
+  
+  
+</script>

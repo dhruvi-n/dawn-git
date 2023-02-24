@@ -1,0 +1,198 @@
+.gggggg_1 .filter_group li a {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    display: block;
+    text-indent: -9999px;
+    overflow: hidden;
+    margin: 0 4px 4px;
+   
+    border-radius: 100%;
+    box-shadow: 0 0 0 1px #e8e8e1;
+    box-shadow: 0 0 0 1px #e8e8e1;
+    transition: box-shadow .2s ease;
+}
+.gggggg_1 .filter_group li a:before{
+border-radius: 100%;
+    border-width: 4px;
+  border: 3px solid;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+  border: 4px solid rgb(255, 255, 255);
+  content: "";
+    position: absolute;
+/*   border-color: rgb(255, 255, 255); */
+}
+.filter_group li {
+    list-style: none;
+  padding-bottom: 5px;
+  display: block;
+}
+ ul.filter_group {
+    padding: 0;
+}
+.color_css.filter_group {
+    padding: 0;
+    display: flex;
+  flex-wrap: wrap
+}
+.gggggg_1 .activefilter a {
+    box-shadow: 0 0 0 2px #000 !important;
+}
+.gggggg_1 .filter_group li:hover a {
+    box-shadow: 0 0 0 2px #000 !important;
+}
+h3.filter_title {
+    margin: 0;
+  text-transform: uppercase;
+    letter-spacing: .3em;
+    font-size: .8em;
+    display: block;
+    width: 100%;
+    padding-top: 15px;
+  cursor: pointer;
+  display: flex;
+    justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+}
+h3.filter_title1 {
+    margin: 0;
+  text-transform: uppercase;
+    letter-spacing: .3em;
+    font-size: .8em;
+    display: block;
+    width: 100%;
+    padding-top: 15px;
+  cursor: pointer;
+  display: flex;
+    justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+}
+.gggggg_1.form_groupss {
+    border-top: 0;
+}
+.arw_filter i{
+font-size: 17px;
+}
+/*===tooltip  */
+ .tooltip {
+  position: relative;
+  display: inline-block;
+  
+}
+
+ .tooltip .tooltiptext {
+  visibility: hidden;
+ width: 97px;
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 123%;
+    left: 80%;
+    margin-left: -60px;
+    box-shadow: 0px 5px 15px 0px rgb(0 0 0 / 30%);
+}
+
+ .tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+ .tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+/*===tooltip  */
+
+
+
+/*===color code css===  */
+.gggggg_1 li[data-value="silver"] a {
+    background-color: #c0c0c0 ;
+}
+.gggggg_1 li[data-value="white"] a {
+    background-color: #fff ;
+}
+.gggggg_1 li[data-value="yellow"] a {
+    background-color: #ffff00 ;
+}
+.gggggg_1 li[data-value="parrot"] a {
+    background-color: #78ce2b ;
+}
+
+.gggggg_1 li[data-value="wine"] a {
+    background-color: #630127 ;
+}
+
+.gggggg_1 li[data-value="chicoo"] a {
+    background-color: #ffff00 ;
+}
+.gggggg_1 li[data-value="orange"] a {
+    background-color: #e15b00 ;
+}
+
+.gggggg_1 li[data-value="purple"] a {
+    background-color: #6f109c ;
+}
+.gggggg_1 li[data-value="grey"] a {
+    background-color: #808080 ;
+}
+.gggggg_1 li[data-value="red"] a {
+    background-color: #ff0000 ;
+}
+.gggggg_1 li[data-value="peach"] a {
+    background-color: #feab9e ;
+}
+.gggggg_1 li[data-value="skyblue"] a {
+    background-color: #98cefe ;
+}
+.gggggg_1 li[data-value="cream"] a {
+    background-color: #fef8e6 ;
+}
+.gggggg_1 li[data-value="mustard"] a {
+    background-color: #facf25 ;
+}
+.gggggg_1 li[data-value="brown"] a {
+    background-color: #4f3326 ;
+}
+.gggggg_1 li[data-value="black"] a {
+    background-color: #000 ;
+}
+.gggggg_1 li[data-value="pink"] a {
+    background-color: #fed2db ;
+}
+.gggggg_1 li[data-value="rama"] a {
+    background-color: #00c18b ;
+}
+.gggggg_1 li[data-value="coffee"] a {
+    background-color: #4e2b24 ;
+}
+.gggggg_1 li[data-value="pista"] a {
+    background-color: #ffff00 ;
+}
+.gggggg_1 li[data-value="pista"] a {
+    background-color: #b7fe7d ;
+}
+.gggggg_1 li[data-value="navyblue"] a {
+    background-color: #021530 ;
+}
+.gggggg_1 li[data-value="blue"] a {
+    background-color: #2ca0e6 ;
+}
+.gggggg_1 li[data-value="green"] a {
+    background-color: #042711 ;
+}
+

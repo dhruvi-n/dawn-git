@@ -1,0 +1,90 @@
+<h2>fancyBox v3.2 + Slick carousel</h2>
+
+<div class="main-slider" style="background: #eee;padding: 20px;">
+
+  <a href="https://c2.staticflickr.com/6/5499/30972532232_051e1dc57e_h.jpg" data-fancybox="images">
+    <img src="https://c2.staticflickr.com/6/5499/30972532232_e9a298a0c5_m.jpg" />
+  </a>
+
+  <a href="https://farm6.staticflickr.com/5551/31096145856_793c69283a_k_d.jpg" data-fancybox="images">
+    <img src="https://farm6.staticflickr.com/5551/31096145856_4915afb23e_m_d.jpg" />
+  </a>
+
+  <a href="https://c1.staticflickr.com/1/357/31876784275_12286240d4_h.jpg" data-fancybox="images">
+    <img src="https://c1.staticflickr.com/1/357/31876784275_fbc9696913_m.jpg" />
+  </a>
+
+  <a href="https://farm1.staticflickr.com/582/32752534825_4b35b2df81_o_d.jpg" data-fancybox="images">
+    <img src="https://farm1.staticflickr.com/582/32752534825_c25321a594_m_d.jpg" />
+  </a>
+
+</div>
+  <script>
+
+    // Init fancyBox
+$().fancybox({
+  selector : '.slick-slide:not(.slick-cloned)',
+  hash     : false
+});
+
+// Init Slick
+$(".main-slider").slick({
+  slidesToShow   : 3,
+  slidesToScroll : 3,
+  infinite : true,
+  dots     : false,
+  arrows   : false,
+  responsive : [
+    {
+      breakpoint : 960,
+      settings : {
+        slidesToShow   : 1,
+        slidesToScroll : 1
+      }
+    }
+  ]
+});
+
+  </script>
+
+
+{% schema %}
+{
+   "name":"fencybox",
+   "settings":[
+
+   ],
+   "blocks":[
+      {
+         "type":"image",
+         "name":"block",
+         "settings":[
+            {
+               "type":"text",
+               "id":"cus_title",
+               "label":"Title"
+            },
+            {
+               "type":"textarea",
+               "id":"cus_desc",
+               "label":"Description"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":{
+
+
+            "en":"fencybox"
+         },
+         "category":{
+
+
+            "en":"fencybox"
+         }
+      }
+   ]
+}
+{% endschema %}

@@ -1,0 +1,60 @@
+{% assign product = all_products[section.settings.feture_prod] %}
+<div class="main-collection-practise">
+  <div class="member-shipped">
+    <div class="feature-prod">
+      <div class="product-feat-title">{{ product.title }}</div>
+      <div class="feature_prod-image">
+        <img src="{{ product | img_url: 'master' }}"> 
+      </div>
+      <div class="description">
+          <p>{{ product.description }}</p>
+      </div>
+      <div class="featureprod-price">{{ product.price }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+   "name":"Custom product",
+   "settings":[
+{
+               "type":"product",
+               "id":"feture_prod",
+               "label":"feature product"
+            }
+   ],
+   "blocks":[
+      {
+         "type":"image",
+         "name":"block",
+         "settings":[
+            {
+               "type":"text",
+               "id":"cus_title",
+               "label":"Title"
+            },
+            {
+               "type":"textarea",
+               "id":"cus_desc",
+               "label":"Description"
+            }
+         ]
+      }
+   ],
+   "presets":[
+      {
+         "name":{
+
+
+            "en":"Custom product"
+         },
+         "category":{
+
+
+            "en":"Custom product"
+         }
+      }
+   ]
+}
+{% endschema %}
